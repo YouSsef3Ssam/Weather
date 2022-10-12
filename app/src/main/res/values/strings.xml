@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Weather</string>
+    <string name="please_check_your_internet_connection">Please check your internet connection</string>
+    <string name="dialog_permission_title">Permission required</string>
+    <string name="dialog_permission_message">Please grant location permission to be able to show the weather data</string>
+    <string name="dialog_permission_button_positive">Okay</string>
+    <string name="dialog_permission_button_positive_setting">Setting</string>
+    <string name="celsius">Celsius</string>
+    <string name="fahrenheit">Fahrenheit</string>
+    <string name="title_notification_reminder">Today\'s temperature.</string>
+    <string name="message_notification_reminder">Temperature is %.2f %s° be safe.</string>
+    <string name="temp">%.2f %s°</string>
+    <string name="can_not_get_location_message">Can\'t get location please ensure that you turn on the location from settings</string>
+    <string name="no_local_weather_message">Can\'t get weather from local, please check your internet connection and try again</string>
+</resources>

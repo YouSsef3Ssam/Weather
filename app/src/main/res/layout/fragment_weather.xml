@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.youssef.weather.business.entities.TempUnit" />
+
+        <variable
+            name="weather"
+            type="com.youssef.weather.business.entities.Weather" />
+
+        <variable
+            name="tempUnit"
+            type="com.youssef.weather.business.entities.TempUnit" />
+
+        <variable
+            name="loading"
+            type="java.lang.Boolean" />
+
+        <variable
+            name="error"
+            type="java.lang.String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/weatherFragmentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="12dp"
+        tools:context=".framework.presentation.features.weather.WeatherFragment">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{loading ? View.VISIBLE : View.GONE, default = visible}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/errorTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:fontFamily="@font/cairo_semi_bold"
+            android:gravity="center"
+            android:text="@{error}"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            android:visibility="@{!loading &amp;&amp; error != null ? View.VISIBLE : View.GONE, default = visible}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
+        <androidx.constraintlayout.widget.Group
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{!loading &amp;&amp; weather != null ? View.VISIBLE : View.GONE, default = gone}"
+            app:constraint_referenced_ids="date, temperatureIV, temperatureTV, windIV, windTV, humidityIV, humidityTV, tempRG" />
+
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/cairo_semi_bold"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            app:date="@{weather.dateTime}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/temperatureIV"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="32dp"
+            android:src="@drawable/temperature"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/date" />
+
+        <TextView
+            android:id="@+id/temperatureTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:fontFamily="@font/cairo_semi_bold"
+            android:gravity="center"
+            android:text="@{@string/temp(weather.main.temp, tempUnit.sign)}"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@id/temperatureIV"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/temperatureIV"
+            app:layout_constraintTop_toTopOf="@id/temperatureIV" />
+
+        <ImageView
+            android:id="@+id/windIV"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/wind"
+            app:layout_constraintStart_toStartOf="@id/temperatureIV"
+            app:layout_constraintTop_toBottomOf="@+id/temperatureIV" />
+
+        <TextView
+            android:id="@+id/windTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:fontFamily="@font/cairo_semi_bold"
+            android:gravity="center"
+            android:text="@{String.valueOf(weather.wind.speed)}"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@id/windIV"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/windIV"
+            app:layout_constraintTop_toTopOf="@id/windIV" />
+
+        <ImageView
+            android:id="@+id/humidityIV"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/humidity"
+            app:layout_constraintStart_toStartOf="@id/windIV"
+            app:layout_constraintTop_toBottomOf="@+id/windIV" />
+
+        <TextView
+            android:id="@+id/humidityTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:fontFamily="@font/cairo_semi_bold"
+            android:gravity="center"
+            android:text="@{String.valueOf(weather.main.humidity)}"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@id/humidityIV"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/humidityIV"
+            app:layout_constraintTop_toTopOf="@id/humidityIV" />
+
+        <RadioGroup
+            android:id="@+id/tempRG"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/humidityIV">
+
+            <RadioButton
+                android:id="@+id/celsius"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@{tempUnit == TempUnit.CELSIUS ? true : false}"
+                android:text="@string/celsius" />
+
+            <RadioButton
+                android:id="@+id/fahrenheit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@{tempUnit == TempUnit.FAHRENHEIT ? true : false}"
+                android:text="@string/fahrenheit" />
+        </RadioGroup>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
