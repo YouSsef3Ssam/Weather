@@ -13,6 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -40,16 +41,20 @@ class AlarmReceiver : BroadcastReceiver() {
         prefDataSource.getLocation()?.let {
             coroutineScope.launch {
                 val tempUnit = prefDataSource.getTemperatureUnit()
-                val weather = getWeather(it, tempUnit)
-                notificationBuilder.build(
-                    context.getString(R.string.title_notification_reminder),
-                    context.getString(
-                        R.string.message_notification_reminder,
-                        weather.main.temp,
-                        tempUnit.sign
-                    ), R.drawable.logo
-                )
-                remindersManager.startReminder()
+                try {
+                    val weather = getWeather(it, tempUnit)
+                    notificationBuilder.build(
+                        context.getString(R.string.title_notification_reminder),
+                        context.getString(
+                            R.string.message_notification_reminder,
+                            weather.main.temp,
+                            tempUnit.sign
+                        ), R.drawable.logo
+                    )
+                    remindersManager.startReminder()
+                } catch (e: Exception) {
+                    Timber.e(e)
+                }
             }
         }
     }
